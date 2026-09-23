@@ -12,18 +12,25 @@ def normalize_answer(answer):
 def rotate_left(items, steps):
     """Devuelve una lista nueva rotada a la izquierda."""
     copied = list(items)
-    copied.rotate(-steps)
-    return copied
+
+    if not copied:
+        return copied
+
+    normalized_steps = steps % len(copied)
+    return copied[normalized_steps:] + copied[:normalized_steps]
 
 
 def round_score_to_ten(score):
     """Redondea una puntuación no negativa a la decena más cercana."""
-    return round(score / 10) * 10
+    return ((score + 5) // 10) * 10
 
 
 def rank_teams(entries):
     """Ordena pares (equipo, puntuación) para la clasificación."""
-    return sorted(entries, key=lambda item: -item[1])
+    return sorted(
+        entries,
+        key=lambda item: (-item[1], item[0].casefold()),
+    )
 
 
 def unique_tags(tags):
