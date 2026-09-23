@@ -27,8 +27,16 @@ def rank_teams(entries):
 
 
 def unique_tags(tags):
-    """Elimina etiquetas repetidas."""
-    return list(set(tags))
+    """Elimina duplicados conservando la primera aparición y el orden."""
+    resultado = []
+    vistas = set()
+
+    for etiqueta in tags:
+        if etiqueta not in vistas:
+            vistas.add(etiqueta)
+            resultado.append(etiqueta)
+
+    return resultado
 
 
 def average_score(scores):
